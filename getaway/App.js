@@ -5,20 +5,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from './HomeScreen';
-
-
-
-function SearchScreen() {
-  return <Text>Search Screen</Text>;
-}
-
-function LikeScreen() {
-  return <Text>Like Screen</Text>;
-}
-
-function ProfileScreen() {
-  return <Text>Profile Screen</Text>;
-}
+import SearchScreen from './SearchScreen';
+import LikeScreen from './LikeScreen';
+import ProfileScreen from './ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
