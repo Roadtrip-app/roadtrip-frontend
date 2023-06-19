@@ -1,71 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import React from 'react';
+import { Text, View, ImageBackground, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import HomeScreen from './HomeScreen';
+import SearchScreen from './SearchScreen';
+import LikeScreen from './LikeScreen';
+import ProfileScreen from './ProfileScreen';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text></Text>
       <StatusBar style="auto" />
-      <View style={styles.line}/>
-      <ButtonHub/>
+
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused ? 'home' : 'home-outline';
+              } else if (route.name === 'Search') {
+                iconName = focused ? 'search' : 'search-outline';
+              } else if (route.name === 'Likes') {
+                iconName = focused ? 'heart' : 'heart-outline';
+              } else if (route.name === 'Profile') {
+                iconName = focused ? 'person-circle' : 'person-circle-outline';
+              }
+
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+
+            tabBarActiveTintColor: '#FD9528',
+            tabBarInactiveTintColor: '#10384a',
+            tabBarStyle: { position: 'absolute' },
+            tabBarShowLabel: false,
+            headerShown: false,
+          })}
+          
+        >
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Search" component={SearchScreen} />
+          <Tab.Screen name="Likes" component={LikeScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </View>
-    
   );
 }
-// Button Hub
-const ButtonHub = () => (
-  <View style={styles.hub}>
-    <View style={styles.button}>
-    <Icon.Button 
-      name="home"
-      backgroundColor="#FFD460"
-      onPress={() => console.log('Home Button Pressed')}/>
-    </View>
-    
-    <View style={styles.button}>
-    <Icon.Button
-      name="search"
-      backgroundColor="#F07B3F"
-      onPress={() => console.log("Search Pressed")}/>
-    </View>
-    <View style={styles.button}>
-    <Icon.Button
-      name="heart"
-      backgroundColor="#EA5455"
-      onPress={() => console.log('Like button Pressed')}/>
-    </View>
-    <View style={styles.button}>
-    <Icon.Button
-      name="person-circle-outline"
-      backgroundColor="#2D4059"
-      onPress={() => console.log("Profile Button Pressed")}/>
-    </View>
-    
-  </View>
-);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  hub: {
-    flexDirection: 'row',
-    bottom: 40,
-    position: 'absolute',
-    width: '100%'
-  },
-  button: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  line: {
-    position: 'absolute',
-    bottom: 85,
-    width: '100%',
-    borderTopWidth: 1,
-    borderColor: 'grey',
   },
 });
