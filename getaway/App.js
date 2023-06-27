@@ -8,7 +8,7 @@ import HomeScreen from './HomeScreen';
 import SearchScreen from './SearchScreen';
 import LikeScreen from './LikeScreen';
 import ProfileScreen from './ProfileScreen';
-
+import TripMenu from './TripMenu'
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -30,6 +30,8 @@ export default function App() {
                 iconName = focused ? 'heart' : 'heart-outline';
               } else if (route.name === 'Profile') {
                 iconName = focused ? 'person-circle' : 'person-circle-outline';
+              } else if (route.name === 'Test') {
+                iconName = 'flask-outline'
               }
 
               return <Icon name={iconName} size={size} color={color} />;
@@ -47,6 +49,7 @@ export default function App() {
           <Tab.Screen name="Search" component={SearchScreen} />
           <Tab.Screen name="Likes" component={LikeScreen} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
+          <Tab.Screen name="Test" component={TripMenu} />
         </Tab.Navigator>
       </NavigationContainer>
     </View>
