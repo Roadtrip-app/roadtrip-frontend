@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     },
     topButtonText: {
         color: 'white',
-        fontFamily: 'Cochin',
     },
     image: {
         width: '100%',
