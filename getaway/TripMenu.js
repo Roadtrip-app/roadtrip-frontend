@@ -1,15 +1,15 @@
-import { Text, Button, View, StyleSheet} from 'react-native';
+import { Text, Button, View, StyleSheet, SafeAreaView} from 'react-native';
 import TextInput from './components/TextInput'
 const TripMenu = () => {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View>
                 <TextInput defaultText="Starting point"></TextInput>
                 <TextInput defaultText="Destination"></TextInput>
                 <TextInput defaultText="Testing"></TextInput>
                 <Button title="test"></Button>
             </View>
-        </View>
+        </SafeAreaView>
         
     )
 }

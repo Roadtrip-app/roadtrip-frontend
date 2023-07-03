@@ -1,39 +1,48 @@
-import React from 'react';
-import {useState} from 'react';
-import {Button, Text, View, Image, ImageBackground, StatusBar, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { Button, Text, View, Image, ImageBackground, StatusBar, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 const ProfileScreen = () => {
     const [profileSource, setProfile] = useState(null);
+    const [selectedTab, setSelectedTab] = useState(0);
 
-    const selectImage = () => {
-        const options = {
-            noData: true,
-        };
+    const handleTabPress = (tabIndex) => {
+        setSelectedTab(tabIndex);
+    };
 
-    ImagePicker.launchImageLibrary(options, response => {
-        console.log('Response = ', response);
-
-        if (response.didCancel) {
-            console.log("User Cancelled Image Selection");
-        } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
-        } else {
-            const source = {uri: response.uri};
-            setProfile(source);
-        }
-    });
-};
     return (
-    <View style={styles.container}>
-        <View style={styles.banner}></View>
+    <SafeAreaView style={styles.container}>
+        <View style={styles.banner}>
+        <Icon style={styles.searchIcon} name="settings-sharp" size={20} color="black"/>
+        </View>
         <View style={styles.profilePictureContainer}>
             <Image source={require('./assets/young_adult_man_blue_shirt_smiling.jpg')} style={styles.profilePicture}/>
         </View>
-        <View style={styles.pictureHub}>
-            <Text>Test</Text>
+        <View style={styles.profileName}>
+            <Text style={styles.nameText}>Hunter DeArment</Text>
+            <Text style={styles.dateJoined}>1526 Miles Traveled</Text>
         </View>
-    </View>
+        <View style={styles.tabsContainer}>
+            {["My Post", "Favorites", "Community", "Profile"].map((tab, index) => (
+                <TouchableOpacity
+                    key={index}
+                    style={styles.tabItem}
+                    onPress={() => handleTabPress(index)}
+                >
+                    <View>
+                        <Text style={[styles.tabText, selectedTab === index && styles.activeTab]}>{tab}</Text>
+                        {selectedTab === index && <View style={styles.tabUnderline}/>}
+                    </View>
+                </TouchableOpacity>
+            ))}
+            
+
+        </View>
+
+
+    </SafeAreaView>
+
+    
     );
 };
 
@@ -42,7 +51,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fff",
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
 
     profilePictureContainer: {
@@ -50,34 +59,91 @@ const styles = StyleSheet.create({
         top: 100,
         zIndex: 1,
     },
+    
+    tabsContainer: {
+        flexDirection: 'row',
+        top: '41%',
+        height: '6.32%',
+        
+    },
+
+    tabItem: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        
+    },
+
+    tabInner: {
+        alignItems: 'center'
+    },
+
+    activeTab: {
+        
+    },
+
+    tabUnderline: {
+        height: 2,
+        backgroundColor: 'orange',
+    },
+    
+    tabText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 
     profilePicture: {
-        borderColor: 'grey',
+        borderColor: 'orange',
         borderWidth: 2,
-        width: 100,  // replace with the size you want
-        height: 100, // replace with the size you want
-        borderRadius: 90,  // half of your width and height
+        width: 100,  
+        height: 100, 
+        borderRadius: 90,  
         overflow: 'hidden',
     },
 
     profileName: {
-        top: 220,
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'column',
+        top: "21%",
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        borderRadius: 2,
+        borderWidth: 1,
+        height: 50,
+        width: 150,
+        borderColor: 'red',
+
     },
 
-    pictureHub: {
-
+    
+    userInfo: {
+        flexDirection: 'row',
+        height: '80%',
+        top: '-100%',
     },
 
     banner: {
         borderWidth: 1,
         height: 117,
-        width: '100%',
+        width: '101%',
         position: 'absolute',
-        top: 35
+        top: 35,
+        borderColor: 'orange',
     },
+
+    searchIcon: {
+        left: "92%",
+        top: "5%"
+    },
+
+    nameText: {
+        fontSize: 10,
+    },
+
+    dateJoined: {
+        fontSize: 8,
+    },
+    
 });
 
 export default ProfileScreen;
