@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Button, Text, View, Image, ImageBackground, StatusBar, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import Community from './components/Community';
+import Favorites from './components/Favorites';
+import MyPost from './components/MyPost';
+import ProfileInfo from './components/ProfileInfo';
+
 const ProfileScreen = () => {
     const [profileSource, setProfile] = useState(null);
     const [selectedTab, setSelectedTab] = useState(0);
@@ -39,12 +45,21 @@ const ProfileScreen = () => {
 
         </View>
 
+        <View style={styles.contentBox}>
+            {selectedTab === 0 && <MyPost />}
+            {selectedTab === 1 && <Favorites />}
+            {selectedTab === 2 && <Community />}
+            {selectedTab === 3 && <ProfileInfo />}
+        </View>
+
 
     </SafeAreaView>
 
     
     );
 };
+
+
 
 const styles = StyleSheet.create({
     container: {
