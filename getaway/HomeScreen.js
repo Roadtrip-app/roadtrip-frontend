@@ -1,14 +1,16 @@
 import React from 'react';
 import { Text, View, ImageBackground, StatusBar, StyleSheet, TouchableOpacity} from 'react-native';
-
+import { BlurView } from '@react-native-community/blur';
 
 const HomeScreen = () => (
     <View style={styles.container}>
     <ImageBackground source={require('./assets/pietro-de-grandi-pidpjXuorPE-unsplash.jpg')} style={styles.image}>
     <View style={styles.takeATrip}>
-      <Text style={styles.titleName}>Get Away</Text>
+      <Text style={styles.titleName}>GetAway</Text>
       <TripButtons/>
     </View>
+
+    <View style={styles.Feed}></View>
     </ImageBackground>
     <StatusBar style="auto" />
     
@@ -33,12 +35,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    hub: {
-        flexDirection: 'row',
-        bottom: 40,
-        position: 'absolute',
-        width: '100%'
-    },
     button: {
         flex: 1,
         alignItems: 'center',
@@ -48,7 +44,9 @@ const styles = StyleSheet.create({
         fontSize: 55,
         alignSelf: 'center',
         paddingTop: 15,
-        color: '#002527'
+        color: '#FD9528',
+        fontFamily: 'Cochin',
+        textShadowColor: 'black',
     },
     line: {
         position: 'absolute',
@@ -61,11 +59,12 @@ const styles = StyleSheet.create({
         height: '25%',
         width: '80%',
         borderWidth: 1,
-        borderColor: 'grey',
-        marginTop: -450,
+        borderColor: 'orange',
+        top: -250,
         alignSelf: 'center',
         borderRadius: 10,
         overflow: 'hidden',
+        
     },
     tripButtons: {
         flexDirection: 'row',
@@ -93,6 +92,17 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: "center",
     },
+    Feed: {
+      borderWidth: 1,
+      top: 300,
+      height: 400,
+      width: '80%',
+      position: 'absolute',
+      alignSelf: 'center',
+      borderColor: 'orange',
+      borderRadius: 10,
+    },
+
 });
 
 export default HomeScreen;
