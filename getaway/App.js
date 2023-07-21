@@ -3,13 +3,27 @@ import { Text, View, ImageBackground, StatusBar, StyleSheet, TouchableOpacity } 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { createStackNavigator} from '@react-navigation/stack';
+
+
 
 import HomeScreen from './HomeScreen';
 import SearchScreen from './components/SearchScreen';
 import LikeScreen from './components/LikeScreen';
 import ProfileScreen from './ProfileScreen';
+import TripInfo from './components/tripInfo';
 import TripMenu from './TripMenu'
 const Tab = createBottomTabNavigator();
+const LikeStack = createStackNavigator();
+
+function LikeStackNavigator() {
+  return (
+    <LikeStack.Navigator>
+      <LikeStack.Screen name="Likes" component={LikeScreen}/>
+      <LikeStack.Screen name="TripInfo" component={TripInfo}/>
+    </LikeStack.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -47,7 +61,7 @@ export default function App() {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Search" component={SearchScreen} />
-          <Tab.Screen name="Likes" component={LikeScreen} />
+          <Tab.Screen name="Likes" component={LikeStackNavigator} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
           <Tab.Screen name="Test" component={TripMenu} />
         </Tab.Navigator>

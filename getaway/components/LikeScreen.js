@@ -1,8 +1,8 @@
 import React from 'react';
-import { FlatList, SectionList, SafeAreaView, Text, View, ImageBackground, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, SectionList, SafeAreaView, Text, View, ImageBackground, StatusBar, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const states = {
+export const states = {
     alabama: { name: 'Alabama', image: require('getaway/assets/state_images/alabama.jpg') },
     alaska: { name: 'Alaska', image: require('getaway/assets/state_images/alaska.jpg') },
     arizona: { name: 'Arizona', image: require('getaway/assets/state_images/arizona.jpg') },
@@ -55,13 +55,19 @@ const states = {
     wyoming: { name: 'Wyoming', image: require('getaway/assets/state_images/wyoming.jpg') }
 };
 
-const Item = ({ state1, state2 }) => (
+export const Item = ({ state1, state2, tripInfo, navigation}) => (
     <View style={styles.itemContainer}>
         <ImageBackground source={state1.image} style={styles.image} resizeMode="cover">
             <Text style={styles.destinationText}>{state1.name}</Text>
         </ImageBackground>
-        
-        <Icon name="car" size={30} color="orange" style={styles.arrowIcon} />
+        <View>
+        <TouchableOpacity 
+                style={styles.btn}
+                onPress={() => navigation.navigate('TripInfo', { trip: tripInfo })}
+            >
+            <Icon name="car" size={30} color="orange" style={styles.arrowIcon} />
+            </TouchableOpacity>
+        </View>
         
         <ImageBackground source={state2.image} style={styles.image} resizeMode="cover">
             <Text style={styles.destinationText}>{state2.name}</Text>
@@ -69,12 +75,14 @@ const Item = ({ state1, state2 }) => (
     </View>
 );
 
-const LikeScreen = () => (
+const LikeScreen = ({navigation}) => (
     <SafeAreaView style={styles.container}>
-        <Item state1={states.colorado} state2={states.kansas} />
+        <Item state1={states.colorado} state2={states.nevada} navigation={navigation}/>
         <Item state1={states.hawaii} state2={states.arizona} />
         <Item state1={states.southCarolina} state2={states.nevada} />
-        <Item state1={states.colorado} state2={states.newYork}/>
+        <Item state1={states.colorado} state2={states.florida}/>
+
+        
     </SafeAreaView>
 );
 
@@ -109,6 +117,7 @@ const styles = StyleSheet.create({
     image: {
         width: 180,
         height: 100,
+        zIndex: -1,
     },
     destinationText: {
         position: 'absolute',
@@ -117,17 +126,22 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 100,
         textAlign: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0,5)',
         color: '#fff',
         fontSize: 24,
     },
     arrowIcon: {
         position: 'absolute',
-        top: '50%',
-        left: '50%',
+        left: 0,
+        top: 20,
+
+    },
+    btn: {
+        alignItems: 'center',
+        right: 20,
+        bottom: 50,
         zIndex: 1,
     },
-    
+
 });
 
 export default LikeScreen;

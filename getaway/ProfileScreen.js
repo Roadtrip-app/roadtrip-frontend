@@ -1,164 +1,130 @@
 import React, { useState } from 'react';
-import { Button, Text, View, Image, ImageBackground, StatusBar, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import { ScrollView, Text, View, Image, SafeAreaView, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as ImagePicker from 'expo-image-picker';
 
-import Community from './components/Community';
-import Favorites from './components/Favorites';
-import MyPost from './components/MyPost';
-import ProfileInfo from './components/ProfileInfo';
+
+
+
+
+import { states, Item } from 'getaway/components/LikeScreen';
 
 const ProfileScreen = () => {
-    const [profileSource, setProfile] = useState(null);
-    const [selectedTab, setSelectedTab] = useState(0);
+    const [image, setImage] = useState(null);
 
-    const handleTabPress = (tabIndex) => {
-        setSelectedTab(tabIndex);
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+
+        console.log(result);
+
+        if(!result.cancelled) {
+            setImage(result.uri);
+        }
     };
 
     return (
-    <SafeAreaView style={styles.container}>
-        <View style={styles.banner}>
-        <Icon style={styles.searchIcon} name="settings-sharp" size={20} color="black"/>
-        </View>
-        <View style={styles.profilePictureContainer}>
-            <Image source={require('./assets/young_adult_man_blue_shirt_smiling.jpg')} style={styles.profilePicture}/>
-        </View>
-        <View style={styles.profileName}>
-            <Text style={styles.nameText}>Hunter DeArment</Text>
-            <Text style={styles.dateJoined}>1526 Miles Traveled</Text>
-        </View>
-        <View style={styles.tabsContainer}>
-            {["My Post", "Favorites", "Community", "Profile"].map((tab, index) => (
-                <TouchableOpacity
-                    key={index}
-                    style={styles.tabItem}
-                    onPress={() => handleTabPress(index)}
-                >
-                    <View>
-                        <Text style={[styles.tabText, selectedTab === index && styles.activeTab]}>{tab}</Text>
-                        {selectedTab === index && <View style={styles.tabUnderline}/>}
-                    </View>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.topView}>
+                <ImageBackground source={require("getaway/assets/poi/zion.jpg")} style={styles.br}>
+                <Icon style={styles.searchIcon} name="settings-outline" size={20} color="black"/>
+                <TouchableOpacity onPress={pickImage} style={styles.profilePicture}>
+                    {image ? <Image style={styles.profileImage} source={{uri: image}} /> : null}
                 </TouchableOpacity>
-            ))}
+                <View style={styles.profileInfo}>
+                    <Text>Hunter</Text>
+                    <Text>2530 Miles </Text>
+                    <Text>Denver</Text>
+                </View>
+
+
+                </ImageBackground>
+            </View>
             
-
-        </View>
-
-        <View style={styles.contentBox}>
-            {selectedTab === 0 && <MyPost />}
-            {selectedTab === 1 && <Favorites />}
-            {selectedTab === 2 && <Community />}
-            {selectedTab === 3 && <ProfileInfo />}
-        </View>
-
-
-    </SafeAreaView>
-
-    
+            <ScrollView style={styles.bottomView}>
+                <Item state1={states.hawaii} state2={states.arizona} />
+                <Item state1={states.southDakota} state2={states.alabama} />
+                <Item state1={states.maine} state2={states.georgia} />
+            </ScrollView>
+        </SafeAreaView>
     );
-};
-
-
+}
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff",
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      alignContent: 'center'
+    },
+    topView: {
+        position: 'relative',
+        width: '100%',
+        height: '50%',
+        backgroundColor: 'white',
         alignItems: 'center',
-        justifyContent: 'flex-start',
     },
-
-    profilePictureContainer: {
+    bottomView: {
+        position: 'relative',
+        width: '100%',
+        height: '50%',
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        borderRadius: 1,
+        borderColor: 'black',
+        borderWidth: 2,
+    },
+    profilePicture: {
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        borderColor: 'black',
+        borderWidth: 2,
         position: 'absolute',
-        top: 100,
-        zIndex: 1,
+        top: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    
-    tabsContainer: {
-        flexDirection: 'row',
-        top: '41%',
-        height: '6.32%',
-        
-    },
-
-    tabItem: {
+    profileInfo: {
+        position: 'relative',
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: 'orange',
+        width: '40%',
+        height: '20%',
+        top: 225,
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1,
-        
+        padding: 20,
     },
-
-    tabInner: {
-        alignItems: 'center'
-    },
-
-    activeTab: {
-        
-    },
-
-    tabUnderline: {
-        height: 2,
-        backgroundColor: 'orange',
-    },
-    
-    tabText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-
-    profilePicture: {
-        borderColor: 'orange',
-        borderWidth: 2,
-        width: 100,  
-        height: 100, 
-        borderRadius: 90,  
-        overflow: 'hidden',
-    },
-
-    profileName: {
-        flexDirection: 'column',
-        top: "21%",
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        borderRadius: 2,
+    profilePost: {
+        top: 240,
+        fontFamily: 'Trebuchet MS',
+        borderColor: 'black',
         borderWidth: 1,
-        height: 50,
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        borderRadius: 5,
+        fontSize: 18,
+        width: 50,
+    },
+    profileImage: {
         width: 150,
-        borderColor: 'red',
-
+        height: 150,
+        borderRadius: 75
     },
-
-    
-    userInfo: {
-        flexDirection: 'row',
-        height: '80%',
-        top: '-100%',
-    },
-
-    banner: {
-        borderWidth: 1,
-        height: 117,
-        width: '101%',
-        position: 'absolute',
-        top: 35,
-        borderColor: 'orange',
-    },
-
     searchIcon: {
-        left: "92%",
-        top: "5%"
+        left: '40%',
     },
-
-    nameText: {
-        fontSize: 10,
-    },
-
-    dateJoined: {
-        fontSize: 8,
-    },
-    
+    br: {
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        alignItems: 'center',
+    }
 });
 
 export default ProfileScreen;
