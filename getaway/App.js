@@ -16,6 +16,7 @@ import TripMenu from './TripMenu'
 const Tab = createBottomTabNavigator();
 const LikeStack = createStackNavigator();
 
+// Navigation between Like screen and trip object
 function LikeStackNavigator() {
   return (
     <LikeStack.Navigator>
@@ -29,7 +30,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-
+      {/* Navigation hub for bottom to different screens */}
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
