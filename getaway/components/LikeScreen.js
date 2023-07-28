@@ -55,9 +55,9 @@ export const states = {
     wyoming: { name: 'Wyoming', image: require('getaway/assets/state_images/wyoming.jpg') }
 };
 
-export const Item = ({ state1, state2, tripInfo, navigation}) => (
+export const Item = ({ state1, state2, navigation}) => (
     <View style={styles.itemContainer}>
-        <TouchableOpacity style={styles.imageContainer}>
+        <TouchableOpacity style={styles.imageContainer} onPress={() => navigation.navigate('TripInfo', { state1, state2})}>
             <ImageBackground source={state1.image} style={styles.imageLeft} resizeMode="cover">
                 <Text style={styles.destinationText}>{state1.name}</Text>
             </ImageBackground>
