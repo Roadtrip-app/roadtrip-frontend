@@ -57,32 +57,24 @@ export const states = {
 
 export const Item = ({ state1, state2, tripInfo, navigation}) => (
     <View style={styles.itemContainer}>
-        <ImageBackground source={state1.image} style={styles.image} resizeMode="cover">
-            <Text style={styles.destinationText}>{state1.name}</Text>
-        </ImageBackground>
-        <View>
-        <TouchableOpacity 
-                style={styles.btn}
-                onPress={() => navigation.navigate('TripInfo', { trip: tripInfo })}
-            >
-            <Icon name="car" size={30} color="orange" style={styles.arrowIcon} />
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.imageContainer}>
+            <ImageBackground source={state1.image} style={styles.imageLeft} resizeMode="cover">
+                <Text style={styles.destinationText}>{state1.name}</Text>
+            </ImageBackground>
+            <ImageBackground source={state2.image} style={styles.imageRight} resizeMode="cover">
+                <Text style={styles.destinationText}>{state2.name}</Text>
+            </ImageBackground>
+        </TouchableOpacity>
         
-        <ImageBackground source={state2.image} style={styles.image} resizeMode="cover">
-            <Text style={styles.destinationText}>{state2.name}</Text>
-        </ImageBackground>
     </View>
 );
 
 const LikeScreen = ({navigation}) => (
     <SafeAreaView style={styles.container}>
         <Item state1={states.colorado} state2={states.nevada} navigation={navigation}/>
-        <Item state1={states.hawaii} state2={states.arizona} />
-        <Item state1={states.southCarolina} state2={states.nevada} />
-        <Item state1={states.colorado} state2={states.florida}/>
-
-        
+        <Item state1={states.hawaii} state2={states.arizona} navigation={navigation}/>
+        <Item state1={states.southCarolina} state2={states.nevada} navigation={navigation}/>
+        <Item state1={states.colorado} state2={states.florida} navigation={navigation}/>
     </SafeAreaView>
 );
 
@@ -107,17 +99,33 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 20,
+        marginVertical: 1,
     },
     item: {
         fontSize: 24,
         color: '#333',
         padding: 10,
     },
-    image: {
+    imageContainer: {
+        width: '100%',
+        height: 80,
+        borderWidth: 1,
+        alignSelf: 'center',
+        top: 5,
+        borderRadius: 10,
+        flexDirection: 'row',
+        overflow: 'hidden'
+    },
+    imageLeft: {
         width: 180,
         height: 100,
-        zIndex: -1,
+    },
+    imageRight: {
+        width: 180,
+        height: 100,
+        borderRadius: 18,
     },
     destinationText: {
         position: 'absolute',
